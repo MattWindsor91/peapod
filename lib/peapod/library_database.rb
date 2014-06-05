@@ -33,7 +33,7 @@ module Peapod
 
     # Creates a query selecting the podcast with the given ID
     def query_podcast_with_id(pod_id)
-      @db[PODCAST].where { podcast_id == pod_id }
+      @db[PODCAST].where(podcast_id: pod_id)
     end
   end
 end
