@@ -7,15 +7,11 @@ action = ARGV[1]
 
 pod = Peapod.library.on_podcast_with_id(pod_id)
 
-case action.downcase
-when 'suspend'
-  puts pod.suspend!
-when 'unsuspend'
-  puts pod.unsuspend!
-when 'check'
-  suspended = pod.suspended?
-  puts 'yes' if     suspended
-  puts 'no'  unless suspended
-else
-  puts 'valid actions: suspend unsuspend check'
-end
+ACTIONS = {
+  suspend:   ->() { pod.suspend!   },
+  unsuspend: ->() { pod.unsuspend! },
+  check:     ->() { pod.suspended? }
+}
+DEFAULT = ->() { 'valid actions: suspend unsuspend check' }
+
+puts ACTIONS.fetch(action.downcase.intern, DEFAULT).call
